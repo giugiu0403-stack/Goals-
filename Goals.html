@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Giu Goals">
+<title>Giu Goals — Sep 12 to Oct 12</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { background:#060A10; color:#E2E8F0; font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif; min-height:100vh; }
+  ::-webkit-scrollbar{width:3px} ::-webkit-scrollbar-thumb{background:#1E293B;border-radius:2px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+const LS_KEY = "giu-goals-sep12";
+
+const GOALS = [
+  {id:1,title:"AI Agency: $5,000/month recurring",color:"#10B981",tag:"Business",steps:[
+    "Keep Anthony's system running and producing results",
+    "Turn Anthony results into updated case study",
+    "5 outreach attempts per day minimum",
+    "Close client 2 at $1,500+/month",
+    "Close client 3 at $1,500+/month",
+    "Bring friends in as salespeople — get agreement in writing",
+    "Add SMS follow-up and Google review request as new service",
+    "Close client 4 to push toward $5k",
+    "Hit $5,000/month recurring by Oct 12"
+  ]},
+  {id:2,title:"Documentary: first 10-min cut shown to the boys",color:"#EC4899",tag:"Creative",steps:[
+    "Shoot something real every single week",
+    "Build a shot list for remaining summer moments",
+    "Log and organize all footage",
+    "Learn basic editing workflow",
+    "Cut a rough 10-min assembly by end of October",
+    "Get music and sound right",
+    "Screen for the Faded Boyz"
+  ]},
+  {id:3,title:"Make the golf team",color:"#22C55E",tag:"Physical",steps:[
+    "Range practice every weekday",
+    "9 holes Thursday, Saturday, Sunday",
+    "Keep knee healthy — no shortcuts",
+    "Track scores weekly",
+    "Confirm tryout date",
+    "Peak two weeks before tryout"
+  ]},
+  {id:4,title:"Jouer: one piece worn in public by someone else",color:"#A855F7",tag:"Creative",steps:[
+    "Finalize one design concept",
+    "Source fabric or blanks",
+    "Find a printer or embroiderer",
+    "Produce one sample piece",
+    "Have someone wear it in public",
+    "Photograph it properly",
+    "Post it"
+  ]},
+  {id:5,title:"Publish first philosophy video",color:"#3B82F6",tag:"Creative",steps:[
+    "Pick the strongest essay or idea",
+    "Outline it specifically for video format",
+    "Set up basic recording",
+    "Record rough draft — watch it back",
+    "Re-record until it feels honest",
+    "Edit — keep it tight",
+    "Thumbnail and title",
+    "Publish"
+  ]},
+  {id:6,title:"Finish 5 full books",color:"#F59E0B",tag:"Personal",steps:[
+    "Finish Siddhartha — Hermann Hesse",
+    "Meditations — Marcus Aurelius",
+    "Man and His Symbols — Jung",
+    "Crime and Punishment — Dostoevsky",
+    "One book of your choosing",
+    "15 pages every night minimum"
+  ]},
+  {id:7,title:"FGCU: A's across the board",color:"#EAB308",tag:"Academic",steps:[
+    "Know every syllabus deadline",
+    "Stay ahead of pace in College Algebra",
+    "Stay ahead of pace in Psychology",
+    "Stay ahead in ACE Elements of Honors",
+    "Weekly study block in the schedule",
+    "Office hours at least once per class",
+    "Track grades weekly"
+  ]},
+  {id:8,title:"Gym: visible transformation",color:"#DC2626",tag:"Physical",steps:[
+    "Take a before photo — front, side, back",
+    "Hit the full split every week — zero misses",
+    "Log every lift — progressive overload every 2 weeks",
+    "Dial in nutrition — track protein",
+    "Comparison photo October 12"
+  ]},
+  {id:9,title:"Writing: 10+ finished essays",color:"#8B5CF6",tag:"Creative",steps:[
+    "Write the weekend essay — finish what you started",
+    "One full page every Saturday minimum",
+    "Running folder — every piece saved",
+    "Reread and revise one old essay per week",
+    "Identify 3 strongest pieces by mid-October",
+    "Share one piece with a real person",
+    "10+ finished essays by October 12"
+  ]},
+  {id:10,title:"Climbing: send a route you couldn't in August",color:"#14B8A6",tag:"Physical",steps:[
+    "Log every session",
+    "Identify your current grade ceiling honestly",
+    "Work one grade above comfort",
+    "Both scheduled days every week — Thursday and Sunday",
+    "Send a harder route by October 12"
+  ]},
+  {id:11,title:"Save $1,500",color:"#059669",tag:"Business",steps:[
+    "Keep a separate savings account",
+    "Save 20% of every agency dollar",
+    "Track income and expenses weekly",
+    "Cut one unnecessary expense",
+    "Hit $1,500 saved and untouched by October 12"
+  ]},
+  {id:12,title:"Girl situation resolved",color:"#F472B6",tag:"Personal",steps:[
+    "Stay in touch naturally — don't force it",
+    "Keep the one-on-one thread distinct from the group",
+    "Lock in dates for Tybee Island",
+    "Book Airbnb for Presidents Day weekend",
+    "Show up fully in Georgia"
+  ]},
+  {id:13,title:"Fully present night — zero phone",color:"#38BDF8",tag:"Personal",steps:[
+    "Pick one night intentionally",
+    "Phone goes in another room",
+    "No checking, no scrolling — not once",
+    "Be completely there with whoever you're with"
+  ]},
+  {id:14,title:"Say the hardest thing out loud to a real person",color:"#FB923C",tag:"Personal",steps:[
+    "You know what it is",
+    "Pick the right person",
+    "Pick the right moment",
+    "Say it"
+  ]},
+];
+
+function useStore() {
+  const [data, setData] = React.useState(null);
+  const [status, setStatus] = React.useState("idle");
+  React.useEffect(() => {
+    let init = { goals: {}, notes: {} };
+    try { const s = localStorage.getItem(LS_KEY); if(s) init = {...init, ...JSON.parse(s)}; } catch(e){}
+    setData(init);
+  }, []);
+  const update = (fn) => {
+    setStatus("saving");
+    setData(prev => {
+      const next = fn(prev);
+      try { localStorage.setItem(LS_KEY, JSON.stringify(next)); setStatus("saved"); setTimeout(()=>setStatus("idle"),1200); }
+      catch(e){ setStatus("error"); }
+      return next;
+    });
+  };
+  return [data, update, status];
+}
+
+function CheckBox({done, color}) {
+  return (
+    <div style={{width:16,height:16,borderRadius:4,border:`1.5px solid ${done?color:"#334155"}`,background:done?color:"transparent",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",marginTop:1}}>
+      {done && <span style={{fontSize:9,color:"#000",fontWeight:900}}>✓</span>}
+    </div>
+  );
+}
+
+function StatCard({label, value, color, sub}) {
+  return (
+    <div style={{background:"#0D1117",borderRadius:12,padding:"14px 16px",border:`1px solid ${color}22`}}>
+      <div style={{fontSize:8,letterSpacing:2,color:"#334155",fontWeight:700,marginBottom:6}}>{label}</div>
+      <div style={{fontSize:22,fontWeight:900,color}}>{value}</div>
+      {sub && <div style={{fontSize:10,color:"#475569",marginTop:3}}>{sub}</div>}
+    </div>
+  );
+}
+
+function ProgressBar({pct, color}) {
+  return (
+    <div style={{background:"#1E293B",borderRadius:999,height:3,overflow:"hidden",marginTop:8}}>
+      <div style={{width:`${pct}%`,height:"100%",background:color,borderRadius:999,transition:"width 0.3s"}}/>
+    </div>
+  );
+}
+
+function App() {
+  const [data, update, saveStatus] = useStore();
+  const [view, setView] = React.useState("home");
+  const [selected, setSelected] = React.useState(null);
+
+  const toggleGoal = (gid, i) => update(p => ({...p, goals: {...p.goals, [`${gid}-${i}`]: !p.goals[`${gid}-${i}`]}}));
+
+  const overallPct = React.useMemo(() => {
+    if (!data) return 0;
+    let total=0, done=0;
+    GOALS.forEach(g => {
+      total += g.steps.length;
+      g.steps.forEach((_,i) => { if(data.goals[`${g.id}-${i}`]) done++; });
+    });
+    return total ? Math.round((done/total)*100) : 0;
+  }, [data]);
+
+  const daysLeft = React.useMemo(() => {
+    const end = new Date("2026-10-12");
+    const now = new Date("2026-09-12");
+    return Math.ceil((end - now) / (1000*60*60*24));
+  }, []);
+
+  const goalsByTag = React.useMemo(() => {
+    const tags = {};
+    GOALS.forEach(g => {
+      if (!tags[g.tag]) tags[g.tag] = [];
+      tags[g.tag].push(g);
+    });
+    return tags;
+  }, []);
+
+  if (!data) return (
+    <div style={{minHeight:"100vh",background:"#060A10",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div style={{color:"#334155",fontSize:13,letterSpacing:2}}>LOADING...</div>
+    </div>
+  );
+
+  const TAG_COLORS = { Business:"#10B981", Creative:"#A855F7", Physical:"#EF4444", Academic:"#EAB308", Personal:"#38BDF8" };
+
+  return (
+    <div style={{minHeight:"100vh",background:"#060A10",color:"#E2E8F0",paddingBottom:80}}>
+      <div style={{maxWidth:520,margin:"0 auto",padding:"18px 12px"}}>
+
+        {/* Header */}
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:16}}>
+          <div>
+            <div style={{fontSize:9,letterSpacing:4,color:"#334155",textTransform:"uppercase",marginBottom:4}}>
+              {view==="home" ? "Sep 12 — Oct 12 · 2026" : view==="goal" && selected ? `Goal ${selected.id} of 14` : "All Goals"}
+            </div>
+            <div style={{fontSize:24,fontWeight:900,letterSpacing:-0.5}}>
+              {view==="home" ? "Goals" : view==="goal" && selected ? selected.tag : "All Goals"}
+            </div>
+          </div>
+          {saveStatus!=="idle" && <div style={{fontSize:9,fontWeight:700,color:saveStatus==="saved"?"#10B981":"#F59E0B",marginTop:6}}>{saveStatus==="saved"?"✓ saved":"saving..."}</div>}
+          {view!=="home" && (
+            <div onClick={()=>{setView("home");setSelected(null);}} style={{fontSize:11,color:"#475569",cursor:"pointer",marginTop:6,padding:"4px 10px",background:"#0D1117",borderRadius:6}}>← Back</div>
+          )}
+        </div>
+
+        {/* HOME VIEW */}
+        {view==="home" && (
+          <div>
+            {/* Stats */}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:16}}>
+              <StatCard label="OVERALL PROGRESS" value={`${overallPct}%`} color="#F59E0B" sub={`${GOALS.reduce((s,g)=>s+g.steps.filter((_,i)=>data.goals[`${g.id}-${i}`]).length,0)} of ${GOALS.reduce((s,g)=>s+g.steps.length,0)} steps done`}/>
+              <StatCard label="DAYS REMAINING" value={daysLeft} color="#3B82F6" sub="Until October 12"/>
+              <StatCard label="GOALS COMPLETE" value={GOALS.filter(g=>g.steps.every((_,i)=>data.goals[`${g.id}-${i}`])).length} color="#10B981" sub={`of 14 total`}/>
+              <StatCard label="ACTIVE GOALS" value={GOALS.filter(g=>g.steps.some((_,i)=>data.goals[`${g.id}-${i}`]) && !g.steps.every((_,i)=>data.goals[`${g.id}-${i}`])).length} color="#EC4899" sub="in progress"/>
+            </div>
+
+            {/* Overall bar */}
+            <div style={{background:"#0D1117",borderRadius:12,padding:"14px 16px",marginBottom:16}}>
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+                <span style={{fontSize:9,letterSpacing:2,color:"#334155",fontWeight:700}}>OVERALL</span>
+                <span style={{fontSize:12,fontWeight:900,color:"#F59E0B"}}>{overallPct}%</span>
+              </div>
+              <div style={{background:"#1E293B",borderRadius:999,height:6,overflow:"hidden"}}>
+                <div style={{width:`${overallPct}%`,height:"100%",background:"linear-gradient(90deg,#F59E0B,#EC4899)",borderRadius:999,transition:"width 0.3s"}}/>
+              </div>
+            </div>
+
+            {/* Goals by category */}
+            {Object.entries(goalsByTag).map(([tag, goals]) => (
+              <div key={tag} style={{marginBottom:14}}>
+                <div style={{fontSize:9,letterSpacing:2,color:TAG_COLORS[tag]||"#475569",fontWeight:700,marginBottom:8,paddingLeft:2}}>{tag.toUpperCase()}</div>
+                {goals.map(g => {
+                  const doneCount = g.steps.filter((_,i)=>data.goals[`${g.id}-${i}`]).length;
+                  const pct = Math.round((doneCount/g.steps.length)*100);
+                  const complete = pct===100;
+                  return (
+                    <div key={g.id} onClick={()=>{setSelected(g);setView("goal");}}
+                      style={{background:"#0D1117",borderRadius:12,padding:"12px 14px",marginBottom:8,border:`1px solid ${g.color}22`,cursor:"pointer",opacity:complete?0.7:1}}>
+                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
+                        <div style={{fontSize:8,fontWeight:800,color:g.color,letterSpacing:1}}>GOAL {g.id}</div>
+                        <div style={{fontSize:12,fontWeight:900,color:complete?"#10B981":g.color}}>{pct}%</div>
+                      </div>
+                      <div style={{fontSize:13,fontWeight:700,lineHeight:1.35,marginBottom:2}}>{g.title}</div>
+                      <div style={{fontSize:10,color:"#475569"}}>{doneCount} of {g.steps.length} steps</div>
+                      <ProgressBar pct={pct} color={g.color}/>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* GOAL DETAIL VIEW */}
+        {view==="goal" && selected && (
+          <div>
+            <div style={{background:"#0D1117",borderRadius:12,padding:"14px 16px",marginBottom:14,border:`1px solid ${selected.color}22`}}>
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+                <span style={{fontSize:8,fontWeight:800,color:selected.color,letterSpacing:1}}>GOAL {selected.id}</span>
+                <span style={{fontSize:13,fontWeight:900,color:selected.color}}>
+                  {Math.round((selected.steps.filter((_,i)=>data.goals[`${selected.id}-${i}`]).length/selected.steps.length)*100)}%
+                </span>
+              </div>
+              <div style={{fontSize:16,fontWeight:800,lineHeight:1.3,marginBottom:10}}>{selected.title}</div>
+              <ProgressBar pct={Math.round((selected.steps.filter((_,i)=>data.goals[`${selected.id}-${i}`]).length/selected.steps.length)*100)} color={selected.color}/>
+            </div>
+
+            <div style={{background:"#0D1117",borderRadius:12,padding:"14px 16px"}}>
+              <div style={{fontSize:9,letterSpacing:2,color:"#334155",fontWeight:700,marginBottom:12}}>STEPS</div>
+              {selected.steps.map((step, i) => {
+                const done = !!data.goals[`${selected.id}-${i}`];
+                return (
+                  <div key={i} onClick={()=>toggleGoal(selected.id,i)}
+                    style={{display:"flex",gap:10,marginBottom:14,cursor:"pointer",alignItems:"flex-start"}}>
+                    <CheckBox done={done} color={selected.color}/>
+                    <span style={{fontSize:12.5,lineHeight:1.5,color:done?"#334155":"#94A3B8",textDecoration:done?"line-through":"none",fontWeight:done?400:500}}>
+                      {step}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Navigate between goals */}
+            <div style={{display:"flex",justifyContent:"space-between",marginTop:14}}>
+              {selected.id > 1 && (
+                <div onClick={()=>setSelected(GOALS[selected.id-2])}
+                  style={{fontSize:11,color:"#475569",cursor:"pointer",padding:"8px 14px",background:"#0D1117",borderRadius:8}}>
+                  ← Goal {selected.id-1}
+                </div>
+              )}
+              {selected.id < GOALS.length && (
+                <div onClick={()=>setSelected(GOALS[selected.id])}
+                  style={{fontSize:11,color:"#475569",cursor:"pointer",padding:"8px 14px",background:"#0D1117",borderRadius:8,marginLeft:"auto"}}>
+                  Goal {selected.id+1} →
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      </div>
+
+      {/* Bottom nav */}
+      <div style={{position:"fixed",bottom:0,left:0,right:0,background:"#060A10",borderTop:"1px solid #0D1117",padding:"10px 0 16px"}}>
+        <div style={{maxWidth:520,margin:"0 auto",display:"flex",justifyContent:"space-around"}}>
+          {[{id:"home",icon:"🏠",label:"Home"},{id:"all",icon:"🎯",label:"All"}].map(n=>(
+            <div key={n.id} onClick={()=>{if(n.id==="all"){setView("all");} else setView("home");}}
+              style={{display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",opacity:view===n.id?1:0.4}}>
+              <span style={{fontSize:18}}>{n.icon}</span>
+              <span style={{fontSize:8,letterSpacing:1,color:"#475569",fontWeight:700}}>{n.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* All goals flat view */}
+      {view==="all" && (
+        <div style={{maxWidth:520,margin:"0 auto",padding:"0 12px"}}>
+          <div style={{fontSize:9,letterSpacing:4,color:"#334155",textTransform:"uppercase",marginBottom:4}}>Sep 12 — Oct 12</div>
+          <div style={{fontSize:24,fontWeight:900,letterSpacing:-0.5,marginBottom:16}}>All Goals</div>
+          {GOALS.map(g => {
+            const doneCount = g.steps.filter((_,i)=>data.goals[`${g.id}-${i}`]).length;
+            const pct = Math.round((doneCount/g.steps.length)*100);
+            return (
+              <div key={g.id} onClick={()=>{setSelected(g);setView("goal");}}
+                style={{background:"#0D1117",borderRadius:12,padding:"12px 14px",marginBottom:8,border:`1px solid ${g.color}22`,cursor:"pointer"}}>
+                <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
+                  <span style={{fontSize:8,fontWeight:800,color:g.color,letterSpacing:1}}>{g.tag.toUpperCase()} · {g.id}</span>
+                  <span style={{fontSize:11,fontWeight:900,color:pct===100?"#10B981":g.color}}>{pct}%</span>
+                </div>
+                <div style={{fontSize:13,fontWeight:700,lineHeight:1.35}}>{g.title}</div>
+                <ProgressBar pct={pct} color={g.color}/>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.render(<App/>, document.getElementById("root"));
+</script>
+</body>
+</html>
